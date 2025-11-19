@@ -41,43 +41,55 @@ export function LoginForm({
     },
   })
 
-  // Submit handler
-  async function onSubmit(data: z.infer<typeof loginSchema>) {
-    setLoading(true);
   
+  // Submit Handler
+async function onSubmit(data: z.infer<typeof loginSchema>) {
+  try {
+    setLoading(true);
+    toast.loading("Logging in...", {
+      id: "login-loading",
+    });
+
     const result = await signIn('credentials', {
       email: data.email,
       password: data.password,
-      redirect: false, // prevent redirect on failure
+      redirect: false,
       callbackUrl: '/chat',
     });
-  
-    setLoading(false);
 
+    // Handle sign-in result
     if (result?.error) {
       if (result.error === 'CredentialsSignin') {
-        toast.warning("Oops!", {
-          description: "We couldn't log you in. Double-check your email and password.",
+        toast.error("Oops! We couldn't log you in. Double-check your email and password.", {
+          id: "login-error",
           richColors: true,
         });
-        
       } else {
-        toast.error("Failed to Process", {
-          description: `We're having trouble: ${result.error}. Check logs or try again.`,
+        toast.error(`We're having trouble: ${result.error}. Check logs or try again.`, {
+          id: "login-error",
           richColors: true,
         });
-        
       }
     } else if (result?.ok) {
-      toast.success("Success", {
-        description: `Successfully logged in. Welcome back!`,
+      toast.success("Successfully logged in. Welcome back!", {
+        id: "login-success",
         richColors: true,
       });
 
-      router.push('/chat');
+      router.push(result.url || '/chat');
+      window.location.href = '/chat';
     }
+  } catch (error) {
+    console.error("Error during login:", error);
+    toast.error("An unexpected error occurred. Please try again.", {
+      id: "login-error",
+      richColors: true,
+    });
+  } finally {
+    setLoading(false);
+    toast.dismiss("login-loading");
   }
-  
+}
 
   return (
     <Form {...form}>

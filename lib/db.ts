@@ -1,20 +1,19 @@
 // lib/db.ts
 import { drizzle } from 'drizzle-orm/mysql2'
 import mysql from 'mysql2/promise'
-import * as schema from '@/drizzle/schema' // or your correct path
+import * as schema from '@/drizzle/schema'
 
-const pool = mysql.createPool({
-  host: process.env.MYSQL_HOST!,
-  port: Number(process.env.MYSQL_PORT!),
-  user: process.env.MYSQL_USER!,
-  password: process.env.MYSQL_PASSWORD!,
-  database: process.env.MYSQL_DATABASE!,
-  ssl: {
-    ca: process.env.MYSQL_CA_CERT?.replace(/\\n/g, '\n'),
-  },
+export const poolConnection = mysql.createPool({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  database: process.env.MYSQL_NAME,
+  password: process.env.MYSQL_PASSWORD,
+  port: process.env.MYSQL_PORT ? Number(process.env.MYSQL_PORT) : 3306,
+  connectionLimit: process.env.MYSQL_MAX_CONNECTION ? Number(process.env.MYSQL_MAX_CONNECTION) : 30,
+  waitForConnections: true,
 });
 
-export const db = drizzle(pool, {
+export const db = drizzle(poolConnection, {
   schema,
-  mode: 'default', // ✅ this fixes the error
+  mode: 'default',
 })
