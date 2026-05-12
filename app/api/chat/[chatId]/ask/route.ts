@@ -2,7 +2,7 @@
 'use server';
 
 import { NextRequest, NextResponse } from 'next/server';
-import { generateGeminiResponse } from '@/lib/gemini/gemini';
+import { generateChatResponse } from '@/lib/providers/groq';
 import { auth } from '@/auth';
 import { createNewMessage } from '@/lib/actions/message';
 
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest, { params } : { params: Promise<{ ch
     await createNewMessage(chatId, message, 'user');
 
     // Generate the response from Gemini based on the user's message and recent chat history
-    const aiText = await generateGeminiResponse(message, recentChatHistory);
+    const aiText = await generateChatResponse(message, recentChatHistory);
 
     // Store the bot's response in the database
     await createNewMessage(chatId, aiText.trim(), 'bot');

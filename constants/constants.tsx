@@ -53,21 +53,21 @@ export const Countries = [
   { country: "Bangladesh", flag: "https://www.worldometers.info/img/flags/bg-flag.gif" }
 ];
 
-export const icons = [
+export const socialLinks = [
   {
     label: "Github",
     path: "/assets/icons/github-icon.svg",
-    link: "https://github.com/CodifyCanvas",
+    link: "https://github.com/Shahzaib-Awann",
   },
   {
     label: "Gmail",
     path: "/assets/icons/gmail-icon.svg",
-    link: "https://mail.google.com/mail/?view=cm&fs=1&to=shahzaibawan1357@gmail.com"
+    link: "mailto:shahzaibawan1357@gmail.com"
   },
   {
-    label: "Youtube",
-    path: "/assets/icons/youtube-icon.svg",
-    link: "https://www.youtube.com/channel/UC4rZU01PkQz6PSDfx9HdSkQ",
+    label: "LinkedIn",
+    path: "/assets/icons/linkedin-icon.svg",
+    link: "https://www.linkedin.com/in/shahzaib-awann/"
   },
 ];
 

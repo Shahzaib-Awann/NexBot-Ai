@@ -1,7 +1,7 @@
 'use client';
 
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { icons, Images, navLinks } from '@/constants/constants';
+import { socialLinks, Images, navLinks } from '@/constants/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useLayoutEffect, useRef } from 'react';
@@ -85,7 +85,7 @@ const Footer = () => {
 
         {/* Social Icons */}
         <div className="flex items-center gap-4">
-          {icons.map((icon, index) => (
+          {socialLinks.map((icon, index) => (
             icon.path && (
               <Tooltip key={index}>
                 <TooltipTrigger asChild>
